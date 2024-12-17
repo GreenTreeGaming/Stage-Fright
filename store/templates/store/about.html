@@ -1,0 +1,226 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  /* About Page Styles */
+  .about-section {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #ffffff;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+  }
+
+  .about-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #222;
+    text-transform: uppercase;
+  }
+
+  .about-section p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    color: #555;
+  }
+
+  /* Features Section */
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+  }
+
+  .feature-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    max-width: 300px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .feature-card h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+  }
+
+  .feature-card p {
+    font-size: 1rem;
+    color: #666;
+  }
+
+  .feature-card i {
+    font-size: 3rem;
+    color: #d9534f;
+    margin-bottom: 15px;
+  }
+
+  /* Team Section */
+  .team-section {
+    padding: 60px 20px;
+    background-color: #f8f8f8;
+  }
+
+  .team-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: #222;
+  }
+
+  .team {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .team-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    width: 250px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .team-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .team-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .team-card h4 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 15px 0 5px;
+    color: #333;
+  }
+
+  .team-card p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 15px;
+  }
+
+  /* Animation */
+  .about-section, .features, .team {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s forwards ease-in-out;
+  }
+
+  .features {
+    animation-delay: 0.2s;
+  }
+
+  .team {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .feature-card {
+      max-width: 100%;
+    }
+    .team-card {
+      width: 100%;
+    }
+  }
+</style>
+
+<!-- About Section -->
+<section class="about-section">
+  <h1>About Stage Fright</h1>
+  <p>
+    Welcome to Stage Fright, where music meets raw emotion and every performance is a journey. We're not just a band; we’re a movement, driven by passion, authenticity, and the relentless pursuit of unforgettable experiences.
+  </p>
+  <p>
+    Whether you're a first-time listener or a lifelong fan, Stage Fright is here to connect, inspire, and make every moment unforgettable. Join us and be part of something extraordinary.
+  </p>
+
+  <!-- Features Section -->
+  <div class="features">
+    <div class="feature-card">
+      <i class="fas fa-music"></i>
+      <h3>Authentic Sound</h3>
+      <p>Crafting melodies that resonate deeply, our music tells stories that linger long after the last note.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-guitar"></i>
+      <h3>Epic Performances</h3>
+      <p>From fiery solos to electrifying riffs, our concerts are experiences you’ll never forget.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-heart"></i>
+      <h3>Fan First</h3>
+      <p>Our fans are our family. Your support fuels our drive and creativity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Team Section -->
+<section class="team-section" style="padding-bottom: 80px;">
+  <h2>Meet the Band</h2>
+  <div class="team">
+    <div class="team-card">
+      <img src="{% static 'images/s-l1200.jpg' %}" alt="Lead Vocalist">
+      <h4>Alex Riot</h4>
+      <p>Lead Vocals</p>
+    </div>
+    <div class="team-card">
+      <img src="{% static 'images/s-l1200.jpg' %}" alt="Guitarist">
+      <h4>Sam Thunder</h4>
+      <p>Lead Guitar</p>
+    </div>
+    <div class="team-card">
+      <img src="{% static 'images/s-l1200.jpg' %}" alt="Drummer">
+      <h4>Charlie Smash</h4>
+      <p>Drums</p>
+    </div>
+    <div class="team-card">
+      <img src="{% static 'images/s-l1200.jpg' %}" alt="Bassist">
+      <h4>Jordan Blaze</h4>
+      <p>Bass Guitar</p>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
+
+{% block container-style %}
+  padding-bottom: 100px;
+{% endblock container-style %}

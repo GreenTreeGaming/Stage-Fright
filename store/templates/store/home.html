@@ -1,0 +1,73 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block home %}
+<div class="homepage">
+  <!-- Hero Section -->
+  <div class="hero-section"
+    style="display: flex; align-items: center; justify-content: center; text-align: center; color: white; position: relative; overflow: hidden; height: 100vh;">
+    <img src="{% static 'images/hero-img.png' %}" alt="Hero Background"
+      style="width: 100%; height: 100%; object-fit: cover; object-position: center; position: absolute; top: 0; left: 0; z-index: -1;">
+    <div style="position: relative; z-index: 1; max-width: 600px; padding: 20px; text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);">
+      <h1 style="font-size: 3.5rem; margin-bottom: 20px; font-family: 'Rock Salt', cursive;">Welcome to Stage Fright</h1>
+      <p style="font-size: 1.5rem; margin-bottom: 30px;">Feel the raw power of rock and roll like never before.</p>
+      <a href="#about"
+        style="background-color: #ff4f5a; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Learn
+        More</a>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div id="about" class="about-section" style="padding: 60px 20px; text-align: center; background-color: #f9f9f9;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 20px;">About Us</h2>
+    <p style="max-width: 700px; margin: auto; font-size: 1.2rem; color: #555;">Stage Fright isn't just a band – it's an
+      experience. Born to push boundaries and ignite passion, we channel raw energy into every riff, lyric, and show.
+      From intimate gigs to electrifying stadiums, our mission is to keep the heart of rock alive.</p>
+    <a href="/about"
+      style="color: #ff4f5a; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Read Our Story →</a>
+  </div>
+
+  <!-- Upcoming Shows Section -->
+  <div class="events-section" style="padding: 60px 20px; text-align: center; color: white; background-color: #222;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Upcoming Shows</h2>
+    <p style="font-size: 1.2rem; margin-bottom: 30px;">Catch us live at these venues and feel the energy up close.</p>
+    <ul style="list-style: none; padding: 0; margin: 0; font-size: 1.2rem; line-height: 2;">
+      <li>🎸 <strong>Dec 15, 2024</strong> - Madison Square Garden, NY</li>
+      <li>🎸 <strong>Jan 20, 2025</strong> - Red Rocks Amphitheater, CO</li>
+      <li>🎸 <strong>Feb 10, 2025</strong> - The Roxy Theatre, CA</li>
+    </ul>
+    <a href="/events"
+      style="margin-top: 20px; display: inline-block; background-color: #ff4f5a; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">View
+      All Shows</a>
+  </div>
+
+  <!-- Music and Merch Section -->
+  <div class="music-merch-section" style="padding: 60px 20px; text-align: center; background-color: #f9f9f9;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Get the Music. Rock the Merch.</h2>
+    <p style="font-size: 1.2rem; color: #555; max-width: 700px; margin: auto;">Explore our albums and merch store to
+      bring a piece of Stage Fright into your life. From iconic T-shirts to signed vinyl, we've got everything a rock
+      fan could dream of.</p>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px;">
+      <a href="/store/music"
+        style="background-color: #222; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Buy
+        Our Albums</a>
+      <a href="/store/merch"
+        style="background-color: #222; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Shop
+        Merch</a>
+    </div>
+  </div>
+
+  <!-- Fan Testimonials -->
+  <div class="testimonials-section" style="padding: 60px 20px; text-align: center; background-color: #222; color: white;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 20px;">What Fans Are Saying</h2>
+    <div style="max-width: 700px; margin: auto; font-size: 1.2rem;">
+      <blockquote style="margin-bottom: 20px; font-style: italic;">"Stage Fright's live performance changed my life. The
+        raw energy and passion are unmatched." – Jamie R.</blockquote>
+      <blockquote style="margin-bottom: 20px; font-style: italic;">"Their latest album is a masterpiece. Rock is alive
+        and well thanks to these legends!" – Alex T.</blockquote>
+      <blockquote style="margin-bottom: 20px; font-style: italic;">"I can’t wait to see them live again. They bring
+        something special to every show." – Casey L.</blockquote>
+    </div>
+  </div>
+</div>
+{% endblock home %}

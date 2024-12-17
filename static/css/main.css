@@ -1,0 +1,399 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
+
+/* Base Styles */
+body {
+  background-color: hsl(0, 0%, 98%);
+  overflow-x: hidden;
+  font-family: "Lexend Deca", sans-serif;
+  /* Default font for the entire website */
+  color: hsl(0, 0%, 30%);
+  /* Default text color */
+}
+
+/* Ensure consistency for all text elements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+li,
+button,
+input,
+textarea {
+  font-family: "Lexend Deca", sans-serif;
+}
+
+.btn {
+  font-family: "Lexend Deca", sans-serif;
+}
+
+/* Optional: Define default styles for headers */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: hsl(0, 0%, 30%);
+  /* Darker shade for emphasis */
+  margin: 0 0 20px;
+}
+
+/* Optional: Reset for other text-heavy elements */
+button,
+input,
+textarea {
+  font-family: "Lexend Deca", sans-serif;
+  color: hsl(0, 0%, 30%);
+}
+
+html, body {
+  height: 100%; /* Ensure full viewport height */
+  margin: 0;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+}
+
+main {
+  flex: 1; /* Makes the main content fill available space */
+}
+
+footer {
+  position: relative; /* Ensure it's not fixed or absolute */
+  margin-top: 50px;  /* Add space above the footer */
+}
+
+.box-element {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  /* Reduced padding */
+  margin: 10px 0;
+  /* Reduced margin */
+  width: 100%;
+  max-width: 280px;
+  /* Optional for consistency */
+  transition: transform 0.2s;
+}
+
+.box-element:hover {
+  transform: scale(1.02);
+  /* Slight hover effect */
+}
+
+.thumbnail{
+	width: 100%;
+	height: 200px;
+	-webkit-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+    -moz-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+    box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+}
+
+.product h6 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: hsl(0, 0%, 20%);
+}
+
+.product hr {
+  margin: 8px 0;
+  border-top: 1px solid hsl(0, 0%, 85%);
+}
+
+.price {
+  font-size: 1.3rem;
+  color: hsl(0, 0%, 30%);
+}
+
+.btn {
+  border-radius: 4px;
+}
+
+.add-btn {
+  margin-right: 5px;
+}
+
+.bg-dark {
+  position: relative;
+  /* Allows positioning of elements within this container */
+}
+
+.marquee-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* Ensures the content stays aligned to the left */
+  white-space: nowrap;
+  /* Prevents text from wrapping */
+  overflow: hidden;
+  /* Hides any content that overflows the container */
+  width: 100%;
+  /* Makes sure it spans the full width of its container */
+  height: 100%;
+  /* Ensures the height is stretched to fit its parent container */
+  padding: 10px 0;
+  /* Adds vertical padding to give some breathing room */
+  position: relative;
+  /* Adjusts positioning so the marquee text doesn't overlap */
+}
+
+.marquee-container:hover {
+  animation-play-state: paused;
+  /* Pause animation on hover */
+}
+
+.marquee-container span,
+.marquee-container a {
+  display: inline-block;
+  padding-right: 50px;
+  /* Space between text and link */
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+    /* Start off-screen to the right */
+  }
+
+  100% {
+    transform: translateX(-100%);
+    /* Move off-screen to the left */
+  }
+}
+
+.marquee-container {
+  animation: marquee 15s linear infinite;
+  /* Controls the speed and looping of the animation */
+}
+
+.marquee-container {
+  animation: marquee 15s linear infinite;
+  /* Controls the speed and looping of the animation */
+}
+
+/* ----- */
+/* Container styling */
+.box-element {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 30px;
+  margin: 20px 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Cart row styling */
+.cart-row {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #dee2e6;
+  font-size: 1rem;
+}
+
+.cart-row:last-child {
+  border-bottom: none;
+  /* Remove border for last row */
+}
+
+/* Column headers */
+.cart-row:first-child {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #495057;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #adb5bd;
+  /* Slightly darker border for header */
+}
+
+/* Product image styling */
+.row-image {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+/* Column flex adjustments */
+.cart-row>div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 15px;
+}
+
+.cart-row div:nth-child(2) {
+  justify-content: flex-start;
+  /* Align the product name to the left */
+  text-align: left;
+  flex: 2;
+  /* Item column width */
+}
+
+.cart-row div:nth-child(1) {
+  flex: 1;
+  /* Image column width */
+}
+
+.cart-row div:nth-child(3),
+.cart-row div:nth-child(4),
+.cart-row div:nth-child(5) {
+  flex: 1;
+  /* Price, Quantity, and Total columns */
+}
+
+/* Product name and details */
+.cart-row p {
+  margin: 0;
+  color: #343a40;
+  font-size: 1.1rem;
+}
+
+/* Quantity controls styling */
+.quantity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity p {
+  margin: 0 15px;
+  font-size: 1.1rem;
+  color: #343a40;
+}
+
+.chg-quantity {
+  width: 25px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin: 0 10px;
+}
+
+.chg-quantity:hover {
+  transform: scale(1.1);
+  /* Hover effect on arrows */
+}
+
+/* -------------- */
+/* General box styling */
+.box-element {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 30px;
+  margin: 20px 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+}
+
+/* Form container styling */
+#form-wrapper {
+  padding: 20px;
+}
+
+.form-field {
+  margin-bottom: 20px;
+  /* Adds vertical spacing between fields */
+}
+
+.form-control {
+  padding: 15px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+}
+
+/* Form fieldset and section headings */
+#shipping-info p,
+#user-info p {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #343a40;
+  margin-top: 15px;
+}
+
+/* Submit button styling */
+#form-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: #28a745;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+#form-button:hover {
+  background-color: #218838;
+}
+
+/* Additional fixes for the cart page */
+.cart-page {
+  flex-grow: 1; /* Make sure cart page content takes available space */
+}
+
+.cart-page footer {
+  width: 100%;
+  position: relative;
+  left: 0;
+}
+
+.cart-row {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #dee2e6;
+  font-size: 1rem;
+}
+
+.cart-row:last-child {
+  border-bottom: none;
+}
+
+.cart-row img.row-image {
+  max-width: 80px;
+  max-height: 80px;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.cart-row>div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 15px;
+}
+
+/* Order summary headings */
+h3,
+h5 {
+  color: #495057;
+}
+
+h3 {
+  margin-top: 20px;
+}
+
+h5 {
+  margin: 10px 0;
+}
+
+a.btn-outline-dark {
+  margin-bottom: 15px;
+}

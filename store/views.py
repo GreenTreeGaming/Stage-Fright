@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 import json
 import datetime
 
 from .models import *
 from .utils import cookieCart, cartData, guestOrder
+
+from django.core.mail import send_mail
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
@@ -23,13 +26,80 @@ def about(request):
   context = {'products': products, 'cartItems': cartItems}
   return render(request, 'store/about.html', context)
 
-def store(request):
+def tickets(request):
   data = cartData(request)
   cartItems = data['cartItems']
 
   products = Product.objects.all()
   context = {'products': products, 'cartItems': cartItems}
+  return render(request, 'store/tickets.html', context)
+
+def tourdates(request):
+  data = cartData(request)
+  cartItems = data['cartItems']
+
+  upcoming_events = UpcomingTourDates.objects.all().order_by('date')
+
+  past_events = PastEvents.objects.all().order_by("-date")
+
+  products = Product.objects.all()
+  context = {'products': products, 'cartItems': cartItems, 'upcoming_events': upcoming_events, 'past_events': past_events}
+  return render(request, 'store/tourdates.html', context)
+
+def contact(request):
+    # Fetch cart and product data
+    data = cartData(request)
+    cartItems = data['cartItems']
+    products = Product.objects.all()
+
+    if request.method == 'POST':
+        # Get form data
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        # Build the email content
+        subject = f"New Contact Form Submission from {name}"
+        body = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+        from_email = 'obbyslicedyt@gmail.com'  # Set this to your email address
+
+        try:
+            # Send the email
+            send_mail(
+                subject,
+                body,
+                from_email,  # Use the configured sender
+                ['obbyslicedyt@gmail.com'],  # Replace with your recipient email
+                fail_silently=False,
+            )
+            # Display a success message
+            messages.success(request, "Your message has been sent successfully!")
+        except Exception as e:
+            # Log and display an error message
+            print(f"Email sending failed: {e}")  # Logs error for debugging
+            messages.error(request, "Failed to send your message. Please try again later.")
+
+        return redirect('contact')  # Redirect back to the contact page
+
+    # Render the contact page with context
+    context = {'products': products, 'cartItems': cartItems}
+    return render(request, 'store/contact.html', context)
+
+def store(request):
+  data = cartData(request)
+  cartItems = data['cartItems']
+
+  products = Product.objects.exclude(type='ticket')
+  context = {'products': products, 'cartItems': cartItems}
   return render(request, 'store/store.html', context)
+
+def tickets(request):
+  data = cartData(request)
+  cartItems = data['cartItems']
+
+  products = Product.objects.filter(type='ticket')
+  context = {'products': products, 'cartItems': cartItems}
+  return render(request, 'store/tickets.html', context)
 
 def cart(request):
   data = cartData(request)

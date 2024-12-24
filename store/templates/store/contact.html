@@ -1,0 +1,57 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="contact-page" style="padding: 60px 20px; background-color: #f9f9f9;">
+  <div class="container" style="max-width: 800px; margin: auto; text-align: center;">
+    <h1 style="font-size: 2.5rem; margin-bottom: 20px; color: #333;">Contact Us</h1>
+    <p style="font-size: 1.2rem; color: #555;">We’d love to hear from you! Reach out for any inquiries, bookings, or customer support.</p>
+
+    <!-- Contact Info Section -->
+    <div class="contact-info" style="margin-top: 40px; text-align: left;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 20px; color: #333;">Get in Touch</h2>
+      <ul style="list-style: none; padding: 0; font-size: 1.2rem; line-height: 2; color: #555;">
+        <li><strong>Customer Service:</strong> <a href="tel:+18001234567" style="color: #ff4f5a; text-decoration: none;">+1 (800) 123-4567</a></li>
+        <li><strong>Email:</strong> <a href="mailto:support@stagefright.com" style="color: #ff4f5a; text-decoration: none;">support@stagefright.com</a></li>
+        <li><strong>Booking:</strong> <a href="/tickets" style="color: #ff4f5a; text-decoration: none;">Purchase Tickets</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="contact-form" style="margin-top: 40px; text-align: left;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 20px; color: #333;">Send Us a Message</h2>
+      <form action="{% url 'contact' %}" method="post" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+        {% csrf_token %}
+        <div style="margin-bottom: 15px;">
+          <label for="name" style="display: block; font-size: 1rem; margin-bottom: 5px; color: #333;">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" required
+            style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
+        </div>
+        <div style="margin-bottom: 15px;">
+          <label for="email" style="display: block; font-size: 1rem; margin-bottom: 5px; color: #333;">Your Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required
+            style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
+        </div>
+        <div style="margin-bottom: 15px;">
+          <label for="message" style="display: block; font-size: 1rem; margin-bottom: 5px; color: #333;">Your Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Type your message here" required
+            style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;"></textarea>
+        </div>
+        <div style="text-align: center;">
+          <button type="submit"
+            style="background-color: #ff4f5a; color: white; padding: 12px 30px; border: none; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer;">Send
+            Message</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Join the Fan Club Section -->
+    <div class="fan-club-section" style="margin-top: 60px; text-align: center; padding: 40px; background-color: #222; color: white; border-radius: 8px;">
+      <h2 style="font-size: 2rem; margin-bottom: 20px;">Join the Fan Club</h2>
+      <p style="font-size: 1.2rem; color: #ddd;">Be part of the Stage Fright family! Get exclusive access to early ticket sales, behind-the-scenes content, and special merchandise.</p>
+      <a href="/fan-club"
+        style="margin-top: 20px; display: inline-block; background-color: #ff4f5a; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Join the Fan Club</a>
+    </div>
+  </div>
+</div>
+{% endblock content %}

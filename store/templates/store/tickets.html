@@ -1,0 +1,232 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  /* Modal Styling */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 3rem;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 8px;
+  }
+
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #modal-img {
+    width: 300px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .modal-text h3 {
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  /* Product Card Styles */
+  .product {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+
+  .product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .product .thumbnail {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .product:hover .thumbnail {
+    transform: scale(1.05);
+  }
+
+  .product h6 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 15px 0;
+    color: #333;
+  }
+
+  .product .price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: black;
+    margin: 15px 0;
+  }
+
+  /* Shop Banner Styles */
+  .shop-banner {
+    color: black;
+    padding: 50px 20px;
+  }
+
+  .shop-banner h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  .shop-banner p {
+    font-size: 1.1rem;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 767px) {
+    .product {
+      margin-bottom: 20px;
+      padding: 15px;
+    }
+
+    .product h6 {
+      font-size: 1rem;
+    }
+
+    .product .price {
+      font-size: 1.1rem;
+    }
+
+    .product .btn {
+      font-size: 0.8rem;
+      padding: 8px 16px;
+    }
+
+    .product .thumbnail {
+      height: 180px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .product {
+      padding: 10px;
+    }
+
+    .product .thumbnail {
+      height: 150px;
+    }
+  }
+</style>
+
+<!-- Shop Banner -->
+<div class="shop-banner text-center py-5">
+  <h2>Purchase Tickets</h2>
+  <p>Get ready for an unforgettable experience! Explore our available tickets for upcoming events and secure your spot at the next big show. Don’t miss out—choose your event and grab your tickets today!</p>
+</div>
+
+<!-- Product Cards -->
+<div class="row g-3"> <!-- One row containing all cards -->
+  {% for product in products %}
+  <div class="col-lg-3 col-md-4 col-sm-6">
+    <div class="product" data-desc="{{ product.description }}"> <!-- Added description to parent div -->
+      <img class="thumbnail" src="{{ product.imageURL }}" alt="Product Image">
+      <h6><strong>{{ product.name }}</strong></h6>
+      <hr>
+      <div class="d-flex justify-content-between align-items-center">
+        <button data-product="{{ product.id }}" data-action="add" class="btn btn-dark add-btn update-cart">Add to Cart</button>
+        <button class="btn btn-success view-btn">View</button> <!-- View button -->
+      </div>
+      <h4 class="price"><strong>${{ product.price|floatformat:2 }}</strong></h4>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="modal-body">
+      <!-- Image Section -->
+      <div class="modal-image">
+        <img id="modal-img" alt="Product Image" class="img-fluid">
+      </div>
+      <!-- Text Section -->
+      <div class="modal-text">
+        <h3 id="modal-name" class="modal-title"></h3>
+        <p id="modal-desc" class="modal-description"></p>
+        <h4 id="modal-price" class="modal-price"></h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var modal = document.getElementById("myModal");
+  var btns = document.getElementsByClassName("view-btn");
+  var span = document.getElementsByClassName("close")[0];
+
+  var modalImg = document.getElementById("modal-img");
+  var modalName = document.getElementById("modal-name");
+  var modalPrice = document.getElementById("modal-price");
+  var modalDesc = document.getElementById("modal-desc");
+
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].onclick = function() {
+      var product = this.closest(".product"); // Get the closest product div
+      modalImg.src = product.querySelector("img").src; // Get the image source
+      modalName.textContent = product.querySelector("h6").textContent; // Get product name
+      modalPrice.textContent = product.querySelector(".price").textContent; // Get price
+      modalDesc.textContent = product.getAttribute("data-desc"); // Get product description
+
+      modal.style.display = "block"; // Show modal
+    }
+  }
+
+  span.onclick = function() {
+    modal.style.display = "none"; // Close modal when close button is clicked
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none"; // Close modal if clicked outside
+    }
+  }
+</script>
+
+{% endblock content %}

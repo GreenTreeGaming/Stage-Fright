@@ -1,0 +1,46 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="tour-dates-page" style="padding: 60px 20px; background-color: #f9f9f9;">
+  <div class="container" style="max-width: 900px; margin: auto;">
+    <h1 style="font-size: 2.5rem; text-align: center; margin-bottom: 40px; color: #333;">Upcoming Tour Dates</h1>
+
+    <!-- Upcoming Events Section -->
+    <div class="upcoming-events" style="margin-bottom: 60px;">
+      {% if upcoming_events %}
+      <ul style="list-style: none; padding: 0;">
+        {% for event in upcoming_events %}
+        <li style="margin-bottom: 20px; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+          <h3 style="font-size: 1.5rem; color: #333;">{{ event.date|date:"F d, Y" }} - {{ event.venue }}</h3>
+          <p style="color: #555; margin: 5px 0;">{{ event.city }}, {{ event.state }}</p>
+          <div style="margin-top: 10px;">
+            <a href="/tickets" style="background-color: #ff4f5a; color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none; font-size: 1rem;">Buy Tickets</a>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p style="font-size: 1.2rem; text-align: center; color: #555;">No upcoming events at the moment. Stay tuned!</p>
+      {% endif %}
+    </div>
+
+    <!-- Past Events Section -->
+    <div class="past-events">
+      <h2 style="font-size: 2rem; text-align: center; margin-bottom: 30px; color: #333;">Past Events</h2>
+      {% if past_events %}
+      <ul style="list-style: none; padding: 0;">
+        {% for event in past_events %}
+        <li style="margin-bottom: 20px; padding: 20px; background-color: #f4f4f4; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+          <h3 style="font-size: 1.5rem; color: #555;">{{ event.date|date:"F d, Y" }} - {{ event.venue }}</h3>
+          <p style="color: #777; margin: 5px 0;">{{ event.city }}, {{ event.state }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p style="font-size: 1.2rem; text-align: center; color: #555;">No past events available.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

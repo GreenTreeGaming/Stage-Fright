@@ -139,4 +139,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'obbyslicedyt@gmail.com'  # Replace with your email
-EMAIL_HOST_PASSWORD = 'sgqk mhmc dnea boad'  # Replace with your email password
+EMAIL_HOST_PASSWORD = 'another password'  # Replace with your email password

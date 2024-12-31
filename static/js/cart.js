@@ -59,3 +59,32 @@ function updateUserOrder(productId, action) {
     location.reload()
   })
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const loader = document.getElementById("loader");
+
+  // Hide loader when the page has fully loaded, with a minimum 1-second delay
+  window.onload = () => {
+    setTimeout(() => {
+      loader.classList.add("hidden");
+    }, 1000); // 1-second delay
+  };
+
+  // Show loader only when navigating to a different page (not anchors or same-page links)
+  const links = document.querySelectorAll("a");
+  links.forEach(link => {
+    link.addEventListener("click", (event) => {
+      const targetHref = link.href;
+      const currentHref = window.location.href;
+
+      // Ignore links pointing to the same page or anchors (e.g., #section)
+      if (
+        targetHref.startsWith(window.location.origin) && // Same origin
+        !targetHref.includes('#') && // Not an anchor link
+        targetHref !== currentHref // Not the same page
+      ) {
+        loader.classList.remove("hidden");
+      }
+    });
+  });
+});

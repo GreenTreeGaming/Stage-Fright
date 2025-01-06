@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-f^25z$r0^(^y-dz+jk0*ut)1soa!l3n-f2i)w66i^rw@ev02+u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'stagefright.urls'
@@ -106,37 +107,42 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
+# Language and Time Zone settings
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
 
-USE_I18N = True
-
-USE_TZ = True
-
+USE_I18N = True  # Enables Django’s translation system
+USE_L10N = True  # Enables localized formatting of data
+USE_TZ = True  # Enables timezone-aware datetimes
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'static'),  # Directory for project-level static files
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Directory for collected static files
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Media files (Uploaded content)
 MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')  # Directory for media files
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'store.backends.email_backend.EmailBackend'
+# Email Configuration
+# https://docs.djangoproject.com/en/5.1/topics/email/
+EMAIL_BACKEND = 'store.backends.email_backend.EmailBackend'  # Custom email backend
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'obbyslicedyt@gmail.com'  # Replace with your email
-EMAIL_HOST_PASSWORD = 'another password'  # Replace with your email password
+EMAIL_HOST_PASSWORD = 'another password'  # Replace with your app password
+
+# Note:
+# Replace `EMAIL_HOST_PASSWORD` with a secure app password generated in Gmail
+# Avoid using your personal email password. Use environment variables for better security.

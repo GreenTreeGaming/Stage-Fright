@@ -151,6 +151,27 @@
     }
   }
 
+  .info-section {
+    padding: 40px 20px;
+    background-color: #ffffff;
+    color: #333;
+    border-top: 2px solid #ddd;
+    text-align: center;
+  }
+
+  .info-section h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #222;
+  }
+
+  .info-section p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #555;
+  }
+
   /* Responsive Design */
   @media (max-width: 768px) {
     .feature-card {
@@ -158,6 +179,16 @@
     }
     .team-card {
       width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-section h1, .team-section h2, .info-section h2 {
+      font-size: 2rem;
+    }
+
+    .about-section p, .team-section p, .info-section p {
+      font-size: 1rem;
     }
   }
 </style>
@@ -226,6 +257,18 @@
   <p>As word spread about their electrifying live shows, the band began to attract a loyal following. Even though the musical influences and personalities of the members are different, the common goal for Stage Freight is to create music that resonates with listeners and inspires them to embark on their own journey.
   </p>
   </div>
+</section>
+
+<section class="info-section">
+  <h2>Additional Information</h2>
+  <p>
+    <strong>Wayzata Chapter</strong><br>
+    Team Members: Sarvajith Karun, Shubham Panchal, Aaron Zou, Siddharth Chakravarthula<br>
+    Theme: Stage Fright<br>
+    School: Wayzata<br>
+    City: Plymouth, Minnesota<br>
+    Year: 2025
+  </p>
 </section>
 
 {% endblock content %}

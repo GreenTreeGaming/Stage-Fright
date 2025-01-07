@@ -72,58 +72,59 @@
   </div>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand mx-auto" href="/">
-        <h1 class="text-center" style="font-size: 1.5rem;">STAGE FRIGHT</h1>
-      </a>
+    <div class="container"> <!-- Wrapping with a container for centering the entire navbar -->
+        <!-- Navbar Brand -->
+        <a class="navbar-brand" href="/" style="color: black; font-size: 1.5rem;">STAGE FRIGHT</a>
 
-      <!-- Toggle button for mobile -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        <!-- Toggle button for mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <!-- Collapsible content -->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <div class="d-flex justify-content-between align-items-center w-100">
-          <!-- Navigation links -->
-          <ul class="navbar-nav mx-auto">
-            <li class="nav-item">
-              <a href="/" class="nav-link text-dark">HOME</a>
-            </li>
-            <li class="nav-item">
-              <a href="/tour-dates" class="nav-link text-dark">TOUR DATES</a>
-            </li>
-            <li class="nav-item">
-              <a href="/store" class="nav-link text-dark">MERCH</a>
-            </li>
-            <li class="nav-item">
-              <a href="/tickets" class="nav-link text-dark">TICKETS</a>
-            </li>
-            <li class="nav-item">
-              <a href="/about" class="nav-link text-dark">ABOUT</a>
-            </li>
-            <li class="nav-item">
-              <a href="/contact" class="nav-link text-dark">CONTACT US</a>
-            </li>
-          </ul>
-
-          <!-- Right-side icons -->
-          <div class="d-flex align-items-center">
-            <a href="#" class="text-dark me-3">
-              <i class="bi bi-search" style="font-size: 1.2rem;"></i>
-            </a>
-            <a href="/cart" class="text-dark position-relative">
-              <i class="bi bi-bag" style="font-size: 1.4rem;"></i>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {{ cartItems }}
-              </span>
-            </a>
-          </div>
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <!-- Centered Navigation Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="/" class="nav-link text-dark" aria-current="page">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/tour-dates" class="nav-link text-dark">TOUR DATES</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/store" class="nav-link text-dark">MERCH</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/tickets" class="nav-link text-dark">TICKETS</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/about" class="nav-link text-dark">ABOUT</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contact" class="nav-link text-dark">CONTACT US</a>
+                </li>
+                <!-- Cart link for mobile -->
+                <li class="nav-item d-lg-none"> <!-- Only visible on mobile -->
+                    <a href="/cart" class="nav-link text-dark">
+                        Cart <i class="bi bi-bag"></i>
+                        <span class="badge rounded-pill bg-danger">{{ cartItems }}</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-      </div>
+
+        <!-- Cart Icon (Desktop only) -->
+        <div class="d-none d-lg-flex align-items-center"> <!-- Hidden on mobile -->
+            <a href="/cart" class="text-dark position-relative">
+                <i class="bi bi-bag" style="font-size: 1.4rem;"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{ cartItems }}
+                </span>
+            </a>
+        </div>
     </div>
-  </nav>
+</nav>
 
   <div class="container {% block container-class %}{% endblock container-class %}" style="{% block container-style %}{% endblock container-style %}">
     {% block content %}

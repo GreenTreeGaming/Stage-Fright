@@ -1,51 +1,153 @@
 {% extends 'store/main.html' %}
 {% load static %}
+{% block content %}
 
-{% block home %}
-<div class="box-element">
-	<div class="cart-row">
-		<div style="flex:2"></div>
-		<div style="flex:2"><strong>Item</strong></div>
-		<div style="flex:1"><strong>Price</strong></div>
-		<div style="flex:1"><strong>Quantity</strong></div>
-		<div style="flex:1"><strong>Total</strong></div>
-	</div>
+<style>
+    body {
+        background-color: hsl(0, 0%, 98%);
+        font-family: 'Lexend Deca', sans-serif;
+    }
 
-	{% for item in items %}
-	<div class="cart-row">
-		<div style="flex:2"><img class="row-image" src="{{ item.product.imageURL }}"></div>
-		<div style="flex:2">
-			<p>{{ item.product.name }}</p>
-		</div>
-		<div style="flex:1">
-			<p>${{ item.product.price|floatformat:2 }}</p>
-		</div>
-		<div style="flex:1">
-			<p class="quantity">{{ item.quantity }}</p>
-			<div class="quantity">
-				<img data-product="{{ item.product.id }}" data-action="add" class="chg-quantity update-cart"
-					src="{% static  'images/arrow-up.png' %}">
+    h1, h2, h3, h4, h5, h6, p {
+        color: hsl(0, 0%, 30%);
+        font-family: 'Lexend Deca', sans-serif;
+    }
 
-				<img data-product="{{ item.product.id }}" data-action="remove" class="chg-quantity update-cart"
-					src="{% static  'images/arrow-down.png' %}">
-			</div>
-		</div>
-		<div style="flex:1">
-			<p>${{ item.get_total }}</p>
-		</div>
-	</div>
-	{% endfor %}
-	<table class="table">
-		<tr>
-			<th>
-				<h5>Items: <strong>{{ order.get_cart_items }}</strong></h5>
-			</th>
-			<th>
-				<h5>Total: <strong>${{ order.get_cart_total }}</strong></h5>
-			</th>
-			<th>
-				<a style="float:right; margin:5px" class="btn btn-danger" href="{% url 'checkout' %}">Checkout</a>
-			</th>
-		</tr>
-	</table>
-{% endblock home %}
+    .box-element {
+        box-shadow: hsl(0, 0%, 80%) 0 0 16px;
+        background-color: #fff;
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    .cart-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #ececec;
+        font-size: 1rem;
+    }
+
+    .cart-row img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+
+    .cart-item {
+        flex: 2;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 1rem;
+    }
+
+    .cart-price, .cart-quantity, .cart-total {
+        flex: 1;
+        text-align: center;
+        white-space: nowrap;
+        font-size: 1rem;
+    }
+
+    .quantity-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+    }
+
+    .quantity-controls img {
+        width: 12px;
+        height: 12px;
+        cursor: pointer;
+    }
+
+    table, tr, th, td {
+        background-color: white !important;
+    }
+
+    @media (max-width: 600px) {
+        .cart-row img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .cart-item {
+            font-size: 0.9rem;
+            max-width: 90px; /* Restrict width */
+            text-overflow: ellipsis; /* Add "..." for long text */
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .cart-price, .cart-quantity, .cart-total {
+            font-size: 0.9rem;
+        }
+
+        .quantity-controls img {
+            width: 10px;
+            height: 10px;
+        }
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box-element">
+            <a class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
+            <br><br>
+            <table class="table">
+                <tr>
+                    <th>
+                        <h5>Items: <strong>{{ order.get_cart_items }}</strong></h5>
+                    </th>
+                    <th>
+                        <h5>Total:<strong> ${{ order.get_cart_total }}</strong></h5>
+                    </th>
+                    <th>
+                        <a style="float:right; margin:5px;" class="btn btn-danger" href="{% url 'checkout' %}">Checkout</a>
+                    </th>
+                </tr>
+            </table>
+        </div>
+
+        <br>
+        <div class="box-element">
+            <!-- Cart Header -->
+            <div class="cart-row" style="font-weight: bold;">
+                <div style="flex: 2; text-align: left;">Item</div>
+                <div class="cart-price">Price</div>
+                <div class="cart-quantity">Quantity</div>
+                <div class="cart-total">Total</div>
+            </div>
+
+            <!-- Cart Items -->
+            {% for item in items %}
+            <div class="cart-row">
+                <div style="display: flex; align-items: center; flex: 2;">
+                    <img src="{{ item.product.imageURL }}" alt="{{ item.product.name }}">
+                    <div class="cart-item">
+                        {{ item.product.name|slice:":9" }}{% if item.product.name|length > 9 %}...{% endif %}
+                    </div>
+                </div>
+                <div class="cart-price">${{ item.product.price|floatformat:2 }}</div>
+                <div class="cart-quantity">
+                    <div class="quantity-controls">
+                        <p style="margin: 0; font-weight: bold;">{{ item.quantity }}</p>
+                        <img data-product="{{ item.product.id }}" data-action="add" class="chg-quantity update-cart"
+                             src="{% static 'images/arrow-up.png' %}" alt="Increase">
+                        <img data-product="{{ item.product.id }}" data-action="remove" class="chg-quantity update-cart"
+                             src="{% static 'images/arrow-down.png' %}" alt="Decrease">
+                    </div>
+                </div>
+                <div class="cart-total">${{ item.get_total }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

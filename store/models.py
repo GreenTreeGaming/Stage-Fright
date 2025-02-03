@@ -15,6 +15,7 @@ class Product(models.Model):
     ('clothing', 'Clothing'),
     ('ticket', 'Ticket'),
     ('misc', 'Misc'),
+    ('album', 'Album'),
   }
 
   name = models.CharField(max_length=200, null=True)

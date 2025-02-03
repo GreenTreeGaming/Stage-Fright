@@ -89,9 +89,17 @@ def store(request):
   data = cartData(request)
   cartItems = data['cartItems']
 
-  products = Product.objects.exclude(type='ticket')
+  products = Product.objects.filter(type='clothing')
   context = {'products': products, 'cartItems': cartItems}
   return render(request, 'store/store.html', context)
+
+def albums(request):
+  data = cartData(request)
+  cartItems = data['cartItems']
+
+  products = Product.objects.filter(type='album')
+  context = {'products': products, 'cartItems': cartItems}
+  return render(request, 'store/albums.html', context)
 
 def tickets(request):
   data = cartData(request)

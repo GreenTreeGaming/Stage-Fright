@@ -3,20 +3,25 @@
 
 {% block content %}
 <style>
+  /* Dark Theme */
+  body {
+    background-color: #121212;
+    color: white;
+    font-family: 'Lexend Deca', sans-serif;
+  }
+
   /* About Page Styles */
   .about-section {
     padding: 60px 20px;
     text-align: center;
-    background-color: #ffffff;
-    color: #333;
-    font-family: 'Arial', sans-serif;
+    background-color: #1a1a1a;
+    color: white;
   }
 
   .about-section h1 {
     font-size: 3rem;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #222;
     text-transform: uppercase;
   }
 
@@ -24,7 +29,7 @@
     font-size: 1.2rem;
     line-height: 1.8;
     margin-bottom: 30px;
-    color: #555;
+    color: #ccc;
   }
 
   /* Features Section */
@@ -37,10 +42,9 @@
   }
 
   .feature-card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: #222;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
     padding: 30px;
     text-align: center;
     max-width: 300px;
@@ -49,30 +53,30 @@
 
   .feature-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 15px rgba(255, 0, 0, 0.5);
   }
 
   .feature-card h3 {
     font-size: 1.5rem;
-    color: #333;
+    color: #ff4f5a;
     margin-bottom: 15px;
   }
 
   .feature-card p {
     font-size: 1rem;
-    color: #666;
+    color: #ccc;
   }
 
   .feature-card i {
     font-size: 3rem;
-    color: #d9534f;
+    color: #ff0000;
     margin-bottom: 15px;
   }
 
   /* Team Section */
   .team-section {
     padding: 60px 20px;
-    background-color: #f8f8f8;
+    background-color: #121212;
   }
 
   .team-section h2 {
@@ -80,7 +84,6 @@
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 40px;
-    color: #222;
   }
 
   .team {
@@ -91,19 +94,18 @@
   }
 
   .team-card {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
+    background-color: #222;
     border-radius: 10px;
     overflow: hidden;
     text-align: center;
     width: 250px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.2);
     transition: transform 0.3s, box-shadow 0.3s;
   }
 
   .team-card:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 15px rgba(255, 0, 0, 0.4);
   }
 
   .team-card img {
@@ -116,13 +118,15 @@
     font-size: 1.2rem;
     font-weight: bold;
     margin: 15px 0 5px;
-    color: #333;
+    color: white;
   }
 
   .team-card p {
-    font-size: 1rem;
-    color: #666;
+    font-size: 0.9rem; /* Adjust text size */
+    color: #ccc; /* Lighter color for better contrast */
     margin-bottom: 15px;
+    padding: 0 10px; /* Added padding for better spacing */
+    text-align: center; /* Center aligned text for better readability */
   }
 
   /* Animation */
@@ -153,9 +157,9 @@
 
   .info-section {
     padding: 40px 20px;
-    background-color: #ffffff;
-    color: #333;
-    border-top: 2px solid #ddd;
+    background-color: #1a1a1a;
+    color: white;
+    border-top: 2px solid #ff0000;
     text-align: center;
   }
 
@@ -163,13 +167,12 @@
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #222;
   }
 
   .info-section p {
     font-size: 1.2rem;
     line-height: 1.8;
-    color: #555;
+    color: #ccc;
   }
 
   /* Responsive Design */
@@ -199,9 +202,6 @@
   <p>
     Welcome to Stage Fright, where music meets raw emotion and every performance is a journey. We're not just a band; we’re a movement, driven by passion, authenticity, and the relentless pursuit of unforgettable experiences.
   </p>
-  <p>
-    Whether you're a first-time listener or a lifelong fan, Stage Fright is here to connect, inspire, and make every moment unforgettable. Join us and be part of something extraordinary.
-  </p>
 
   <!-- Features Section -->
   <div class="features">
@@ -224,41 +224,37 @@
 </section>
 
 <!-- Team Section -->
-<section class="team-section" style="padding-bottom: 80px; border-radius: 30px; margin-bottom:15px;">
+<section class="team-section">
   <h2>Meet the Band</h2>
   <div class="team">
     <div class="team-card">
       <img src="{% static 'images/vocals.jpg' %}" alt="Lead Vocalist">
       <h4>Alex Riot</h4>
       <p>Lead Vocals</p>
+      <p>A dynamic and passionate frontman, Alex's powerful voice has earned him a loyal following. Known for his electrifying stage presence and deep connection with the audience, Alex brings raw energy to every performance.</p>
     </div>
     <div class="team-card">
-      <img src="{% static 'images/guitarist.jpeg' %}" alt="Guitarist">
+      <img src="{% static 'images/photo-1613327432471-2a9c7c9d9a5e.avif' %}" alt="Guitarist">
       <h4>Sam Thunder</h4>
       <p>Lead Guitar</p>
+      <p>Sam is the heartbeat of the band's music, with his unmatched skill and ability to weave intricate solos into every song. His fearless attitude and high-octane performances keep fans on the edge of their seats.</p>
     </div>
     <div class="team-card">
       <img src="{% static 'images/drummer.jpg' %}" alt="Drummer">
       <h4>Charlie Smash</h4>
       <p>Drums</p>
+      <p>Charlie’s thunderous beats are the driving force behind Stage Fright’s sound. With impeccable timing and an unrelenting passion for rhythm, he brings an intense energy to every track and keeps the band locked in tight.</p>
     </div>
     <div class="team-card">
       <img src="{% static 'images/bass_guitar.jpg' %}" alt="Bassist">
       <h4>Jordan Blaze</h4>
       <p>Bass Guitar</p>
+      <p>Jordan’s basslines provide the foundation for the band’s music, delivering the deep groove that keeps fans moving. His impeccable technique and undeniable stage presence make him an integral part of the band's sound and energy.</p>
     </div>
   </div>
 </section>
 
-<section class="team-section" style="padding-bottom: 80px; border-radius: 30px;">
-  <h2>How We Got Started</h2>
-  <p>Stage Freight was born in the basement of Alex's family home, where a group of friends would jam together after school. What started as an after-school hobby quickly took on a life of its own when they played their first gig at a local open mic night. The name Stage Freight was inspired by the nervous energy they felt before stepping onto that first stage-a feeling they've since learned to channel into their music.</p>
-
-  <p>As word spread about their electrifying live shows, the band began to attract a loyal following. Even though the musical influences and personalities of the members are different, the common goal for Stage Freight is to create music that resonates with listeners and inspires them to embark on their own journey.
-  </p>
-  </div>
-</section>
-
+<!-- Additional Info Section -->
 <section class="info-section">
   <h2>Additional Information</h2>
   <p>
@@ -272,7 +268,3 @@
 </section>
 
 {% endblock content %}
-
-{% block container-style %}
-  padding-bottom: 100px;
-{% endblock container-style %}

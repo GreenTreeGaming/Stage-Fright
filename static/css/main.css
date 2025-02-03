@@ -48,7 +48,6 @@ button,
 input,
 textarea {
   font-family: "Lexend Deca", sans-serif;
-  color: hsl(0, 0%, 30%);
 }
 
 html, body {
@@ -212,7 +211,6 @@ footer {
 .cart-row:first-child {
   font-weight: bold;
   font-size: 1.2rem;
-  color: #495057;
   padding-bottom: 15px;
   border-bottom: 2px solid #adb5bd;
   /* Slightly darker border for header */
@@ -258,7 +256,6 @@ footer {
 /* Product name and details */
 .cart-row p {
   margin: 0;
-  color: #343a40;
   font-size: 1.1rem;
 }
 
@@ -321,7 +318,6 @@ footer {
 #user-info p {
   font-size: 1.1rem;
   font-weight: bold;
-  color: #343a40;
   margin-top: 15px;
 }
 

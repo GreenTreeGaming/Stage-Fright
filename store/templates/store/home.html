@@ -2,64 +2,135 @@
 {% load static %}
 
 {% block home %}
+
+<style>
+  /* Hero Section Styling */
+  .hero-section {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    height: 100vh;
+    background: url("{% static 'images/banner.jpg' %}") no-repeat center center/cover;
+    background-color: #121212; /* Fallback color */
+  }
+
+  /* Dark Overlay for Visibility */
+  .hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  }
+
+  /* Hero Content (Ensure Visibility) */
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    padding: 20px;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  }
+
+  .hero-content h1 {
+    font-size: 3.5rem;
+    font-family: "Lexend Deca", sans-serif;
+    color: #ff0000;
+    margin-bottom: 20px;
+  }
+
+  .hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+  }
+
+  /* CTA Button */
+  .hero-btn {
+    background-color: #ff0000;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .hero-btn:hover {
+    background-color: #ff2e3a;
+  }
+
+  /* Responsive Fixes */
+  @media (max-width: 768px) {
+    .hero-content h1 {
+      font-size: 2.5rem;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+    }
+    .hero-btn {
+      font-size: 1rem;
+      padding: 10px 25px;
+    }
+  }
+</style>
+
 <div class="homepage">
   <!-- Hero Section -->
-  <div class="hero-section"
-    style="display: flex; align-items: center; justify-content: center; text-align: center; color: white; position: relative; overflow: hidden; height: 100vh;">
-    <img src="{% static 'images/banner.jpg' %}" alt="Hero Background"
-      style="width: 100%; height: 100%; object-fit: cover; object-position: center; position: absolute; top: 0; left: 0; z-index: -1;">
+  <div class="hero-section" style="display: flex; align-items: center; justify-content: center; text-align: center; color: white; position: relative; overflow: hidden; height: 100vh; background-color: #121212;">
     <div style="position: relative; z-index: 1; max-width: 800px; padding: 20px; text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);">
-      <h1 style="font-size: 3.5rem; margin-bottom: 20px; font-family: 'Rock Salt', cursive;">Welcome to Stage Fright</h1>
+      <h1 style="font-size: 3.5rem; margin-bottom: 20px; font-family: 'Lexend Deca', sans-serif; color: #ff0000;">Welcome to Stage Fright</h1>
       <p style="font-size: 1.5rem; margin-bottom: 30px;">Feel the raw power of rock and roll like never before.</p>
       <a href="#about"
-        style="background-color: #ff4f5a; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Learn
+        style="background-color: #ff0000; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Learn
         More</a>
     </div>
   </div>
 
   <!-- About Section -->
-  <div id="about" class="about-section" style="padding: 60px 20px; text-align: center; background-color: #f9f9f9;">
-    <h2 style="font-size: 2.5rem; margin-bottom: 20px;">About Us</h2>
-    <p style="max-width: 700px; margin: auto; font-size: 1.2rem; color: #555;">Stage Fright isn't just a band – it's an
-      experience. Born to push boundaries and ignite passion, we channel raw energy into every riff, lyric, and show.
-      From intimate gigs to electrifying stadiums, our mission is to keep the heart of rock alive.</p>
-    <a href="/about"
-      style="color: #ff4f5a; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Read Our Story →</a>
+  <div id="about" class="about-section" style="padding: 60px 20px; text-align: center; background-color: #1a1a1a; color: white;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: #ff0000;">About Us</h2>
+    <p style="max-width: 700px; margin: auto; font-size: 1.2rem;">Stage Fright isn't just a band – it's an experience. Born to push boundaries and ignite passion, we channel raw energy into every riff, lyric, and show. From intimate gigs to electrifying stadiums, our mission is to keep the heart of rock alive.</p>
+    <a href="/about" style="color: #ff0000; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Read Our Story →</a>
   </div>
 
   <!-- Upcoming Shows Section -->
-  <div class="events-section" style="padding: 60px 20px; text-align: center; color: white; background-color: #222;">
-    <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Upcoming Shows</h2>
+  <div class="events-section" style="padding: 60px 20px; text-align: center; background-color: #222; color: white;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: #ff0000;">Upcoming Shows</h2>
     <p style="font-size: 1.2rem; margin-bottom: 30px;">Catch us live at these venues and feel the energy up close.</p>
     <ul style="list-style: none; padding: 0; margin: 0; font-size: 1.2rem; line-height: 2;">
-      <li>🎸 <strong>Jan 1, 2025</strong> - The White House, Maryland</li>
-      <li>🎸 <strong>Jan 31, 2025</strong> - The Smith Center, Nevada</li>
-      <li>🎸 <strong>Feb 14, 2025</strong> - Madison Square Garden, New York</li>
+      <li>🎸 <strong>Mar 10, 2025</strong> - Red Rocks Amphitheater, Colorado</li>
+      <li>🎸 <strong>Mar 13, 2025</strong> - The White House, Maryland</li>
+      <li>🎸 <strong>Mar 18, 2025</strong> - The Smith Center, Nevada</li>
+      <li>🎸 <strong>Apr 05, 2025</strong> - The Ryman Auditorium, Tennessee</li>
     </ul>
     <a href="/tour-dates"
-      style="margin-top: 20px; display: inline-block; background-color: #ff4f5a; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">View
+      style="margin-top: 20px; display: inline-block; background-color: #ff0000; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">View
       All Shows</a>
   </div>
 
   <!-- Music and Merch Section -->
-  <div class="music-merch-section" style="padding: 60px 20px; text-align: center; background-color: #f9f9f9;">
-    <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Get the Music. Rock the Merch.</h2>
-    <p style="font-size: 1.2rem; color: #555; max-width: 700px; margin: auto;">Explore our albums and merch store to
-      bring a piece of Stage Fright into your life. From iconic T-shirts to signed vinyl, we've got everything a rock
-      fan could dream of.</p>
+  <div class="music-merch-section" style="padding: 60px 20px; text-align: center; background-color: #1a1a1a; color: white;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: #ff0000;">Get the Music. Rock the Merch.</h2>
+    <p style="font-size: 1.2rem; max-width: 700px; margin: auto;">Explore our albums and merch store to bring a piece of Stage Fright into your life. From iconic T-shirts to signed vinyl, we've got everything a rock fan could dream of.</p>
     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px;">
-      <a href="/"
-        style="background-color: #222; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Buy
+      <a href="/albums"
+        style="background-color: #ff0000; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Buy
         Our Albums</a>
       <a href="/store"
-        style="background-color: #222; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Shop
+        style="background-color: #ff0000; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">Shop
         Merch</a>
     </div>
   </div>
 
   <!-- Fan Testimonials -->
   <div class="testimonials-section" style="padding: 60px 20px; text-align: center; background-color: #222; color: white;">
-    <h2 style="font-size: 2.5rem; margin-bottom: 20px;">What Fans Are Saying</h2>
+    <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: #ff0000;">What Fans Are Saying</h2>
     <div style="max-width: 700px; margin: auto; font-size: 1.2rem;">
       <blockquote style="margin-bottom: 20px; font-style: italic;">"Stage Fright's live performance changed my life. The
         raw energy and passion are unmatched." – Jamie R.</blockquote>

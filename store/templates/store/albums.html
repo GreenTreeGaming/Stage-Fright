@@ -1,0 +1,437 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  /* Dark Theme */
+  body {
+    background-color: #121212;
+    color: white;
+    font-family: 'Lexend Deca', sans-serif;
+  }
+
+  /* Modal Styling */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 3rem;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .modal-content {
+    background-color: #1a1a1a;
+    margin: auto;
+    padding: 20px;
+    border: none;
+    width: 80%;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+  }
+
+  .close {
+    color: #ff4f5a;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: white;
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #modal-img {
+    width: 300px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+  }
+
+  /* Product Card Styles */
+  .product {
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+
+  .product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+  }
+
+  .product .thumbnail {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+  }
+
+  .product:hover .thumbnail {
+    transform: scale(1.05);
+  }
+
+  .product h6 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 15px 0;
+    color: white;
+  }
+
+  .product .price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ff4f5a;
+    margin: 15px 0;
+  }
+
+  /* Shop Banner Styles */
+  .shop-banner {
+    color: white;
+    padding: 50px 20px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .shop-banner h2 {
+    font-size: 2.5rem;
+  }
+
+  .shop-banner p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  /* Buttons */
+  .btn-dark {
+    background-color: #ff0000 !important;
+    color: white !important;
+    border: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background 0.3s ease;
+  }
+
+  .btn-dark:hover {
+    background-color: #cc0000 !important;
+  }
+
+  .btn-danger {
+    background-color: transparent !important;
+    color: #ff0000 !important;
+    border: 2px solid #ff0000;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-danger:hover {
+    background-color: #ff4f5a !important;
+    color: white !important;
+    border-color: #ff4f5a;
+  }
+
+  /* Audio Player Styles */
+  .audio-player {
+    margin-top: 40px;
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
+    color: white;
+    width: 80%;
+    margin: 20px auto;
+  }
+
+  .audio-player .song-title {
+    font-size: 1.8rem;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .audio-player .player-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 15px;
+  }
+
+  .audio-player .scrubber {
+    width: 80%;
+    height: 8px;
+    background: #333;
+    outline: none;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+  }
+
+  .audio-player .scrubber::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #ff0000;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .audio-player .scrubber::-webkit-slider-thumb:hover {
+    background: #cc0000;
+  }
+
+  .audio-player .play-btn {
+    background-color: #ff0000;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .audio-player .play-btn:hover {
+    background-color: #cc0000;
+  }
+
+  .audio-player .time {
+    color: white;
+    font-size: 1.1rem;
+    margin-top: 10px;
+  }
+
+  .audio-player #next-btn {
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .audio-player #next-btn:hover {
+    background-color: #ff0000;
+  }
+
+  /* Small Screen Responsiveness */
+  @media (max-width: 767px) {
+    .audio-player {
+      width: 90%;
+      padding: 15px;
+    }
+
+    .audio-player .scrubber {
+      width: 70%;
+    }
+
+    .audio-player .song-title {
+      font-size: 1.5rem;
+    }
+
+    .audio-player .play-btn {
+      font-size: 1.2rem;
+      padding: 8px 12px;
+    }
+
+    .audio-player .time {
+      font-size: 1rem;
+    }
+
+    .audio-player #next-btn {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<!-- Shop Banner -->
+<div class="shop-banner">
+  <h2>Albums</h2>
+  <p>Discover the heart and soul of Stage Fright through our music. Browse our latest albums and find the perfect soundtrack to your next rock-and-roll experience. Don’t miss out—grab your favorite albums now!</p>
+</div>
+
+<!-- Product Cards -->
+<div class="row g-3">
+  {% for product in products %}
+  <div class="col-lg-3 col-md-4 col-sm-6">
+    <div class="product" data-desc="{{ product.description }}">
+      <img class="thumbnail" src="{{ product.imageURL }}" alt="Product Image">
+      <h6><strong>{{ product.name }}</strong></h6>
+      <hr>
+      <div class="d-flex justify-content-between align-items-center">
+        <button data-product="{{ product.id }}" data-action="add" class="btn btn-dark add-btn update-cart">Add to Cart</button>
+        <button class="btn btn-danger view-btn">View</button>
+      </div>
+      <h4 class="price"><strong>${{ product.price|floatformat:2 }}</strong></h4>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="modal-body">
+      <div class="modal-image">
+        <img id="modal-img" alt="Product Image" class="img-fluid">
+      </div>
+      <div class="modal-text">
+        <h3 id="modal-name" class="modal-title"></h3>
+        <p id="modal-desc" class="modal-description"></p>
+        <h4 id="modal-price" class="modal-price" style="color: #ff4f5a;"></h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Audio Player Section -->
+<div class="audio-player">
+  <div class="song-title" id="song-title">Champions</div>
+  <div class="player-controls">
+    <button class="play-btn" id="play-pause-btn">Play</button>
+    <input type="range" id="scrubber" class="scrubber" value="0" max="100" />
+  </div>
+  <div class="time">
+    <span id="current-time">0:00</span> / <span id="total-time">0:00</span>
+  </div>
+  <audio id="audio-player" class="audio-element">
+    <source id="audio-source" src="{% static 'audio/Champions.mp3' %}" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <button id="next-btn">Next Song</button>
+</div>
+
+<script>
+  var modal = document.getElementById("myModal");
+  var btns = document.getElementsByClassName("view-btn");
+  var span = document.getElementsByClassName("close")[0];
+
+  var modalImg = document.getElementById("modal-img");
+  var modalName = document.getElementById("modal-name");
+  var modalPrice = document.getElementById("modal-price");
+  var modalDesc = document.getElementById("modal-desc");
+
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].onclick = function() {
+      var product = this.closest(".product");
+      modalImg.src = product.querySelector("img").src;
+      modalName.textContent = product.querySelector("h6").textContent;
+      modalPrice.textContent = product.querySelector(".price").textContent;
+      modalDesc.textContent = product.getAttribute("data-desc");
+
+      modal.style.display = "block";
+    }
+  }
+
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  // Audio Player Functions
+  var audioPlayer = document.getElementById('audio-player');
+  var playPauseBtn = document.getElementById('play-pause-btn');
+  var scrubber = document.getElementById('scrubber');
+  var currentTimeElement = document.getElementById('current-time');
+  var totalTimeElement = document.getElementById('total-time');
+  var songTitle = document.getElementById('song-title');
+  var nextBtn = document.getElementById('next-btn');
+  var audioSource = document.getElementById('audio-source');
+
+  var songs = [
+    { name: 'Champions', file: 'Champions.mp3' },
+    { name: 'Make Me Crash', file: 'Make Me Crash.mp3' },
+    { name: 'Strong Arm', file: 'Strong arm.mp3' }
+  ];
+
+  let currentSongIndex = 0;
+
+  // Function to change the song
+  function changeSong(songIndex) {
+    songTitle.textContent = songs[songIndex].name;
+    audioSource.src = "{% static 'audio/' %}" + songs[songIndex].file;
+    audioPlayer.load();  // Reload audio
+    audioPlayer.play();  // Start playing the new song
+    updateTime();
+  }
+
+  // Handle play/pause
+  playPauseBtn.addEventListener('click', function () {
+    if (audioPlayer.paused) {
+      audioPlayer.play();
+      playPauseBtn.textContent = 'Pause';
+    } else {
+      audioPlayer.pause();
+      playPauseBtn.textContent = 'Play';
+    }
+  });
+
+  // Scrubber functionality
+  audioPlayer.addEventListener('timeupdate', function () {
+    var progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+    scrubber.value = progress;
+    updateTime();
+  });
+
+  scrubber.addEventListener('input', function () {
+    var scrubValue = scrubber.value;
+    audioPlayer.currentTime = (scrubValue / 100) * audioPlayer.duration;
+  });
+
+  // Update the current time and total time
+  function updateTime() {
+    var currentTime = audioPlayer.currentTime;
+    var totalTime = audioPlayer.duration;
+
+    var currentMinutes = Math.floor(currentTime / 60);
+    var currentSeconds = Math.floor(currentTime % 60);
+    var totalMinutes = Math.floor(totalTime / 60);
+    var totalSeconds = Math.floor(totalTime % 60);
+
+    currentTimeElement.textContent = `${currentMinutes}:${currentSeconds < 10 ? '0' + currentSeconds : currentSeconds}`;
+    totalTimeElement.textContent = `${totalMinutes}:${totalSeconds < 10 ? '0' + totalSeconds : totalSeconds}`;
+  }
+
+  // Handle next song
+  nextBtn.addEventListener('click', function () {
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    changeSong(currentSongIndex);
+  });
+
+  // Initialize with the first song
+  changeSong(0); // Set initial song as Champions
+</script>
+
+{% endblock content %}

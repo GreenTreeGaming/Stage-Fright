@@ -1,182 +1,256 @@
 {% extends 'store/main.html' %}
 {% load static %}
 {% block content %}
-	<div class="row">
-	<div class="col-lg-6">
-		<div class="box-element" id="form-wrapper">
-			<form id="form">
-				{% csrf_token %}
-				<div id="user-info">
-					<div class="form-field">
-						<input required class="form-control" type="text" name="name" placeholder="Name..">
-					</div>
-					<div class="form-field">
-						<input required class="form-control" type="email" name="email" placeholder="Email..">
-					</div>
-				</div>
 
-				<div id="shipping-info">
-					<hr>
-					<p>Shipping Information:</p>
-					<hr>
-					<div class="form-field">
-						<input class="form-control" type="text" name="address" placeholder="Address..">
-					</div>
-					<div class="form-field">
-						<input class="form-control" type="text" name="city" placeholder="City..">
-					</div>
-					<div class="form-field">
-						<input class="form-control" type="text" name="state" placeholder="State..">
-					</div>
-					<div class="form-field">
-						<input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
-					</div>
-				</div>
+<style>
+    /* Dark Theme */
+    body {
+        background-color: #121212;
+        color: white;
+        font-family: 'Lexend Deca', sans-serif;
+    }
 
-				<hr>
-				<input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
-			</form>
-		</div>
+    .box-element {
+        box-shadow: 0 0 16px rgba(255, 0, 0, 0.3);
+        background-color: #1a1a1a;
+        border-radius: 8px;
+        padding: 20px;
+        color: white;
+    }
 
-		<br>
-		<div class="box-element hidden" id="payment-info">
-			<small>Paypal Options</small>
-			<!-- <button id="make-payment">Make Payment</button> -->
-			 <div id="paypal-button-container">
+    .cart-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 0;
+        border-bottom: 1px solid #ff0000;
+        font-size: 1rem;
+    }
 
-			 </div>
-		</div>
+    .cart-row img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        margin-right: 10px;
+        border-radius: 4px;
+    }
 
-	</div>
+    .cart-item {
+        flex: 2;
+        text-align: left;
+        font-size: 1rem;
+    }
 
-	<div class="col-lg-6">
-		<div class="box-element">
-			<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
-			<hr>
-			<h3>Order Summary</h3>
-			<hr>
+    /* Titles & Labels - White for Visibility */
+    h3, h5, label, p, hr {
+        color: white;
+    }
 
-			{% for item in items %}
-				<div class="cart-row">
-					<div style="flex:2"><img class="row-image" src="{{ item.product.imageURL }}"></div>
-					<div style="flex:2"><p>{{ item.product.name }}</p></div>
-					<div style="flex:1"><p>${{ item.product.price|floatformat:2 }}</p></div>
-					<div style="flex:1"><p>x{{ item.quantity }}</p></div>
-				</div>
-			{% endfor %}
-			<h5>Items:   {{ order.get_cart_items }}</h5>
-			<h5>Total:   ${{ order.get_cart_total|floatformat:2 }}</h5>
-		</div>
-	</div>
-	</div>
+    /* Forms */
+    .form-control {
+        background-color: #1a1a1a;
+        color: white;
+        border: 1px solid #ff0000;
+        padding: 10px;
+        border-radius: 4px;
+    }
 
-	<script src="https://www.paypal.com/sdk/js?client-id=AXhhFOQd7m5_EKKl7hsWLBDs9rDlqtIdSPJyHs9ro_-GpfPhrGX_RcknkaLxkP3Xi9SllcYeTxP8uQSn&currency=USD&disable-funding=credit"></script>
+    .form-control:focus {
+        background-color: #1a1a1a;
+        color: white;
+        border: 1px solid white;
+        box-shadow: 0 0 5px #ff0000;
+    }
 
-	<script>
-		var total = '{{ order.get_cart_total }}'
+    label {
+        font-weight: bold;
+        color: white; /* Changed to White */
+    }
 
-		paypal.Buttons({
-			style: {
-				color: 'blue',
-				shape: 'rect',
-			},
+    /* Buttons */
+    .btn-outline-dark {
+        color: #ff0000 !important;
+        border: 1px solid #ff0000 !important;
+    }
 
-			createOrder: function(data, actions) {
-				return actions.order.create({
-					purchase_units: [{
-						amount: {
-							value: parseFloat(total).toFixed(2)
-						}
-					}]
-				});
-			},
+    .btn-outline-dark:hover {
+        background-color: #ff0000 !important;
+        color: white !important;
+    }
 
-			onApprove: function(data, actions) {
-				return actions.order.capture().then(function(details) {
-					submitFormData()
-				});
-			}
-		}).render('#paypal-button-container')
-	</script>
+    .btn-success {
+        background-color: #ff0000 !important;
+        border: none !important;
+        font-weight: bold;
+    }
 
-	<script type="text/javascript">
-		var shipping = '{{ order.shipping }}'
+    .btn-success:hover {
+        background-color: #cc0000 !important;
+    }
 
-		if (shipping === 'False') {
-			document.getElementById('shipping-info').innerHTML = ''
+    .btn-danger {
+        background-color: black !important;
+        color: white !important;
+        border: 1px solid #ff0000;
+    }
+
+    .btn-danger:hover {
+        background-color: #ff4f5a !important;
+    }
+
+    table, tr, th, td {
+        background-color: #1a1a1a !important;
+        color: white;
+        border: none;
+    }
+
+    /* PayPal Button */
+    #paypal-button-container {
+        margin-top: 20px;
+    }
+
+		::placeholder {
+			color: white;
 		}
 
-		if (user != 'AnonymousUser') {
-			document.getElementById('user-info').innerHTML = ''
-		}
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+        .cart-row {
+            flex-wrap: nowrap;
+        }
 
-		if (shipping == 'False' && user != 'AnonymousUser') {
-			document.getElementById('form-wrapper').classList.add('hidden');
-			document.getElementById('payment-info').classList.remove('hidden');
-		}
+        .cart-item {
+            font-size: 0.9rem;
+            max-width: 100px;
+        }
+    }
+</style>
 
-		var form = document.getElementById('form')
+<div class="row">
+    <div class="col-lg-6">
+        <div class="box-element" id="form-wrapper">
+            <form id="form">
+                {% csrf_token %}
+                <div id="user-info">
+                    <div class="form-field">
+                        <label for="name">Name</label>
+                        <input required class="form-control" type="text" name="name" placeholder="Enter your name">
+                    </div>
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input required class="form-control" type="email" name="email" placeholder="Enter your email">
+                    </div>
+                </div>
 
-		csrftoken = form.getElementsByTagName("input")[0].value
+                <div id="shipping-info">
+                    <hr>
+                    <p style="color: white">Shipping Information:</p>
+                    <hr>
+                    <div class="form-field">
+                        <label for="address">Address</label>
+                        <input class="form-control" type="text" name="address" placeholder="Enter your address">
+                    </div>
+                    <div class="form-field">
+                        <label for="city">City</label>
+                        <input class="form-control" type="text" name="city" placeholder="Enter your city">
+                    </div>
+                    <div class="form-field">
+                        <label for="state">State</label>
+                        <input class="form-control" type="text" name="state" placeholder="Enter your state">
+                    </div>
+                    <div class="form-field">
+                        <label for="zipcode">Zip Code</label>
+                        <input class="form-control" type="text" name="zipcode" placeholder="Enter your zip code">
+                    </div>
+                </div>
 
-		form.addEventListener('submit', function(e) {
-			e.preventDefault()
-			document.getElementById('form-button').classList.add('hidden')
-			document.getElementById('payment-info').classList.remove('hidden')
-		})
+                <hr>
+                <input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+            </form>
+        </div>
 
-		// document.getElementById('make-payment').addEventListener('click', function(e) {
-		// 	submitFormData()
-		// })
+        <br>
+        <div class="box-element hidden" id="payment-info">
+            <small>Paypal Options</small>
+            <div id="paypal-button-container"></div>
+        </div>
+    </div>
 
-		function submitFormData() {
-			console.log('Payment button clicked.')
+    <div class="col-lg-6">
+        <div class="box-element">
+            <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+            <hr>
+            <h3>Order Summary</h3>
+            <hr>
 
-			var userFormData = {
-				'name': null,
-				'email': null,
-				'total': total,
-			}
+            {% for item in items %}
+            <div class="cart-row">
+                <div style="flex:2"><img class="row-image" src="{{ item.product.imageURL }}"></div>
+                <div style="flex:2; color: white"><p>{{ item.product.name }}</p></div>
+                <div style="flex:1; color: white"><p>${{ item.product.price|floatformat:2 }}</p></div>
+                <div style="flex:1; color: white"><p>x{{ item.quantity }}</p></div>
+            </div>
+            {% endfor %}
+            <h5>Items: {{ order.get_cart_items }}</h5>
+            <h5>Total: ${{ order.get_cart_total|floatformat:2 }}</h5>
+        </div>
+    </div>
+</div>
 
-			var shippingInfo = {
-				'address': null,
-				'city': null,
-				'state': null,
-				'zipcode': null,
-			}
+<script src="https://www.paypal.com/sdk/js?client-id=AXhhFOQd7m5_EKKl7hsWLBDs9rDlqtIdSPJyHs9ro_-GpfPhrGX_RcknkaLxkP3Xi9SllcYeTxP8uQSn&currency=USD&disable-funding=credit"></script>
 
-			if (shipping != 'False') {
-				shippingInfo.address = form.address.value
-				shippingInfo.city = form.city.value
-				shippingInfo.state = form.state.value
-				shippingInfo.zipcode = form.zipcode.value
-			}
+<script>
+    var total = '{{ order.get_cart_total }}'
 
-			if (user == 'AnonymousUser') {
-				userFormData.name = form.name.value
-				userFormData.email = form.email.value
-			}
+    paypal.Buttons({
+        style: {
+            color: 'blue',
+            shape: 'rect',
+        },
 
-			var url = '/process_order/'
-			fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-CSRFToken': csrftoken,
-				},
-				body: JSON.stringify({'form': userFormData, 'shipping': shippingInfo})
-			})
-			.then((response) => response.json())
-			.then((data) => {
-				console.log('Success:', data)
-				alert('Transaction completed.')
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: parseFloat(total).toFixed(2)
+                    }
+                }]
+            });
+        },
 
-				cart = {}
-				document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                submitFormData()
+            });
+        }
+    }).render('#paypal-button-container')
+</script>
 
-				window.location.href = "{% url 'home' %}"
-			})
-		}
-	</script>
+<script type="text/javascript">
+    var shipping = '{{ order.shipping }}'
+
+    if (shipping === 'False') {
+        document.getElementById('shipping-info').innerHTML = ''
+    }
+
+    if (user != 'AnonymousUser') {
+        document.getElementById('user-info').innerHTML = ''
+    }
+
+    if (shipping == 'False' && user != 'AnonymousUser') {
+        document.getElementById('form-wrapper').classList.add('hidden');
+        document.getElementById('payment-info').classList.remove('hidden');
+    }
+
+    var form = document.getElementById('form')
+
+    csrftoken = form.getElementsByTagName("input")[0].value
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault()
+        document.getElementById('form-button').classList.add('hidden')
+        document.getElementById('payment-info').classList.remove('hidden')
+    })
+</script>
 
 {% endblock content %}

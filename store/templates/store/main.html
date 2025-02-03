@@ -10,7 +10,105 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="icon" href="{% static 'images/IMG_2218.png' %}" type="image/x-icon">
   <title>Stage Fright Official Store</title>
+
+  <style>
+    /* Rock & Roll Dark Theme */
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: 'Arial', sans-serif;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #1a1a1a !important;
+      border-bottom: 2px solid #ff0000;
+    }
+
+    .navbar-brand {
+      color: #ff0000 !important;
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .nav-link {
+      color: white !important;
+      font-size: 1.1rem;
+      font-weight: 500;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .nav-link:hover {
+      color: #ff0000 !important;
+    }
+
+    /* Cart Icon */
+    .cart-icon {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .badge {
+      background-color: #ff0000;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1a1a1a;
+      color: #ffffff;
+      padding: 30px 0;
+      text-align: center;
+      border-top: 2px solid #ff0000;
+    }
+
+    footer a {
+      color: #ff0000;
+      transition: color 0.3s ease-in-out;
+    }
+
+    footer a:hover {
+      color: white;
+    }
+
+    /* Buttons */
+    .btn-danger {
+      background-color: #ff0000 !important;
+      border: none;
+    }
+
+    .btn-danger:hover {
+      background-color: #b30000 !important;
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 991px) {
+      .nav-link {
+        text-align: center;
+      }
+
+      .cart-desktop {
+        display: none;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+  </style>
 
   <script type="text/javascript">
     var user = '{{ request.user }}'
@@ -57,76 +155,58 @@
 
     console.log("Cart:", cart);
   </script>
+
 </head>
 
 <body>
-  <!-- <div class="bg-dark text-white text-center py-2">
-    <div class="marquee-container">
-      <span>ENJOY FREE U.S. STANDARD SHIPPING ON ALL ORDERS OVER $100 NOW THROUGH 12/10.</span>
-      <a href="#" class="text-white text-decoration-underline ms-2">DETAILS AND EXCLUSIONS.</a>
-    </div>
-  </div> -->
 
-  <div class="loader" id="loader">
-    <div class="spinner"></div>
-  </div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="{% static 'images/IMG_2218.png' %}" alt="Stage Fright Logo" style="height: 80px;">
+    </a>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container"> <!-- Wrapping with a container for centering the entire navbar -->
-        <!-- Navbar Brand -->
-        <a class="navbar-brand" href="/" style="color: black; font-size: 1.5rem;">STAGE FRIGHT</a>
+      <!-- Toggle button for mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-        <!-- Toggle button for mobile -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Collapsible content -->
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-            <!-- Centered Navigation Links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a href="/" class="nav-link text-dark" aria-current="page">HOME</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/tour-dates" class="nav-link text-dark">TOUR DATES</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/store" class="nav-link text-dark">MERCH</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/tickets" class="nav-link text-dark">TICKETS</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/about" class="nav-link text-dark">ABOUT</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/contact" class="nav-link text-dark">CONTACT US</a>
-                </li>
-                <!-- Cart link for mobile -->
-                <li class="nav-item d-lg-none"> <!-- Only visible on mobile -->
-                    <a href="/cart" class="nav-link text-dark">
-                        Cart <i class="bi bi-bag"></i>
-                        <span class="badge rounded-pill bg-danger">{{ cartItems }}</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <!-- Cart Icon (Desktop only) -->
-        <div class="d-none d-lg-flex align-items-center"> <!-- Hidden on mobile -->
-            <a href="/cart" class="text-dark position-relative">
-                <i class="bi bi-bag" style="font-size: 1.4rem;"></i>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    {{ cartItems }}
-                </span>
+      <!-- Navigation Links -->
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a href="/" class="nav-link">HOME</a></li>
+          <li class="nav-item"><a href="/tour-dates" class="nav-link">TOUR DATES</a></li>
+          <li class="nav-item"><a href="/store" class="nav-link">MERCH</a></li>
+          <li class="nav-item"><a href="/tickets" class="nav-link">TICKETS</a></li>
+          <li class="nav-item"><a href="/albums" class="nav-link">ALBUMS</a></li>
+          <li class="nav-item"><a href="/about" class="nav-link">ABOUT</a></li>
+          <li class="nav-item"><a href="/contact" class="nav-link">CONTACT US</a></li>
+          <!-- Mobile Cart Link -->
+          <li class="nav-item d-lg-none">
+            <a href="/cart" class="nav-link">
+              Cart <i class="bi bi-bag"></i>
+              <span class="badge rounded-pill">{{ cartItems }}</span>
             </a>
-        </div>
-    </div>
-</nav>
+          </li>
+        </ul>
+      </div>
 
-  <div class="container {% block container-class %}{% endblock container-class %}" style="{% block container-style %}{% endblock container-style %}">
+      <!-- Cart Icon (Desktop) -->
+      <div class="cart-desktop">
+        <a href="/cart" class="position-relative">
+          <i class="bi bi-bag cart-icon"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill">
+            {{ cartItems }}
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="container fade-in">
     {% block content %}
     {% endblock content %}
   </div>
@@ -136,45 +216,32 @@
     {% endblock home %}
   </div>
 
-  <footer class="bg-dark text-light py-5">
-    <div class="container" style="width: 100%;">
-      <!-- Footer Top Section -->
-      <div class="row text-center text-md-start">
-        <div class="col-md-4 mb-4">
-          <h5 class="text-uppercase mb-3">About Stage Fright</h5>
-          <p>We bring raw rock energy to fans worldwide. Join us in celebrating electrifying performances and
-            unforgettable music. Stay connected and rock with us.</p>
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5>About Stage Fright</h5>
+          <p>Raw rock energy meets electrifying performances. Join the movement.</p>
         </div>
-        <div class="col-md-4 mb-4">
-          <h5 class="text-uppercase mb-3">Quick Links</h5>
+        <div class="col-md-4">
+          <h5>Quick Links</h5>
           <ul class="list-unstyled">
-            <li><a href="/tour-dates" class="text-light text-decoration-none">Tour Dates</a></li>
-            <li><a href="/store" class="text-light text-decoration-none">Merch Store</a></li>
-            <li><a href="/tickets" class="text-light text-decoration-none">Tickets</a></li>
-            <li><a href="/contact" class="text-light text-decoration-none">Contact Us</a></li>
+            <li><a href="/tour-dates" style="text-decoration: none;">Tour Dates</a></li>
+            <li><a href="/store" style="text-decoration: none;">Merch Store</a></li>
+            <li><a href="/tickets" style="text-decoration: none;">Tickets</a></li>
+            <li><a href="/contact" style="text-decoration: none;">Contact Us</a></li>
           </ul>
         </div>
-        <div class="col-md-4 mb-4">
-          <h5 class="text-uppercase mb-3">Follow Us</h5>
-          <div class="d-flex justify-content-center justify-content-md-start gap-3">
-            <a href="https://facebook.com" class="text-light" aria-label="Facebook"><i class="bi bi-facebook"
-                style="font-size: 1.5rem;"></i></a>
-            <a href="https://twitter.com" class="text-light" aria-label="Twitter"><i class="bi bi-twitter"
-                style="font-size: 1.5rem;"></i></a>
-            <a href="https://instagram.com" class="text-light" aria-label="Instagram"><i class="bi bi-instagram"
-                style="font-size: 1.5rem;"></i></a>
-            <a href="https://youtube.com" class="text-light" aria-label="YouTube"><i class="bi bi-youtube"
-                style="font-size: 1.5rem;"></i></a>
-          </div>
+        <div class="col-md-4">
+          <h5>Follow Us</h5>
+          <a href="https://facebook.com"><i class="bi bi-facebook"></i></a>
+          <a href="https://twitter.com"><i class="bi bi-twitter"></i></a>
+          <a href="https://instagram.com"><i class="bi bi-instagram"></i></a>
+          <a href="https://youtube.com"><i class="bi bi-youtube"></i></a>
         </div>
       </div>
-
-      <!-- Footer Bottom Section -->
-      <div class="row mt-4">
-        <div class="col text-center">
-          <p class="mb-0">&copy; {{ year }} Stage Fright. All Rights Reserved.</p>
-        </div>
-      </div>
+      <p class="mt-3">&copy; {% now "Y" %} Stage Fright. All Rights Reserved.</p>
     </div>
   </footer>
 
